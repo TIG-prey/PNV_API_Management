@@ -22,7 +22,6 @@ public class InnerUserInterfaceInfoServiceImpl implements InnerUserInterfaceInfo
     @Resource
     private UserInterfaceInfoService userInterfaceInfoService;
 
-
     @Override
     public boolean invokeCount(long interfaceInfoId, long userId) {
         return userInterfaceInfoService.invokeCount(interfaceInfoId, userId);

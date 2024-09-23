@@ -14,7 +14,7 @@
     <name>yuapi-interface</name>
     <description>yuapi-interface</description>
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>8</java.version>
     </properties>
     <dependencies>
         <dependency>

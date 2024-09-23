@@ -128,8 +128,6 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
             System.out.println("剩余可调用次数不足");
             return handleInvokeError(response, HttpStatus.FORBIDDEN);
         }
-        //        Mono<Void> filter = chain.filter(exchange);
-        //        return filter;
         // 5. 请求转发，调用模拟接口 + 响应日志
         return handleResponse(exchange, chain, interfaceInfo.getId(), invokeUser.getId());
 

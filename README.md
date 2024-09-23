@@ -38,7 +38,3 @@ Cubic 云API的接口项目
 ##  common
 
 common定义了公共类；
-=======
-# PNV_API_Management
-编程导航项目二（API项目）
->>>>>>> github/main

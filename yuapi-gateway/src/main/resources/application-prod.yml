@@ -28,13 +28,12 @@ logging:
       springframework:
         cloud:
           gateway: trace
-dubbo:
-  application:
-    name: dubbo-springboot-demo-provider
-  protocol:
-    name: dubbo
-    port: -1
-  registry:
-    id: nacos-registry
-    address: nacos://10.1.24.5:8848
-
+#dubbo:
+#  application:
+#    name: dubbo-springboot-demo-provider
+#  protocol:
+#    name: dubbo
+#    port: -1
+#  registry:
+#    id: nacos-registry
+#    address: nacos://10.1.24.5:8848
