@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # TIG-API-Management
 
 ## 分支 frontend
