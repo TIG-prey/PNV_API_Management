@@ -1,5 +1,7 @@
 package com.yupi.yuapicommon.service;
 
+import com.yupi.yuapicommon.model.entity.UserInterfaceInfo;
+
 /**
  * @author JianShang
  * @version 1.0.0
@@ -15,4 +17,6 @@ public interface InnerUserInterfaceInfoService {
      * @return
      */
     boolean invokeCount(long interfaceInfoId, long userId);
+
+    UserInterfaceInfo interfaceCountJudgement(long interfaceInfoId, long userId);
 }

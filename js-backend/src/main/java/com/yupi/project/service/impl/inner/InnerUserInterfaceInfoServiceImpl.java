@@ -1,5 +1,8 @@
 package com.yupi.project.service.impl.inner;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.yupi.project.common.ErrorCode;
+import com.yupi.project.exception.BusinessException;
 import com.yupi.project.service.UserInterfaceInfoService;
 import com.yupi.yuapicommon.model.entity.UserInterfaceInfo;
 import com.yupi.yuapicommon.service.InnerUserInterfaceInfoService;
@@ -19,13 +22,21 @@ public class InnerUserInterfaceInfoServiceImpl implements InnerUserInterfaceInfo
     @Resource
     private UserInterfaceInfoService userInterfaceInfoService;
 
-    // @Override
-    // public void validInterfaceInfo(UserInterfaceInfo userInterfaceInfo, boolean add) {
-    //
-    // }
 
     @Override
     public boolean invokeCount(long interfaceInfoId, long userId) {
         return userInterfaceInfoService.invokeCount(interfaceInfoId, userId);
+    }
+
+    @Override
+    public UserInterfaceInfo interfaceCountJudgement(long interfaceInfoId, long userId) {
+        // 判断
+        if (interfaceInfoId <= 0 || userId <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        QueryWrapper<UserInterfaceInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("interfaceInfoId", interfaceInfoId);
+        queryWrapper.eq("userId", userId);
+        return userInterfaceInfoService.getOne(queryWrapper);
     }
 }

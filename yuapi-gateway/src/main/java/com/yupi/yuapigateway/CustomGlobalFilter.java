@@ -3,6 +3,7 @@ package com.yupi.yuapigateway;
 import com.yupi.yuapiclientsdk.utils.SignUtils;
 import com.yupi.yuapicommon.model.entity.InterfaceInfo;
 import com.yupi.yuapicommon.model.entity.User;
+import com.yupi.yuapicommon.model.entity.UserInterfaceInfo;
 import com.yupi.yuapicommon.service.InnerInterfaceInfoService;
 import com.yupi.yuapicommon.service.InnerUserInterfaceInfoService;
 import com.yupi.yuapicommon.service.InnerUserService;
@@ -87,28 +88,28 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
             log.error("getInvokeUser error", e);
         }
         if (invokeUser == null) {
-            return handleNoAuth(response);
+            return handleInvokeError(response, HttpStatus.BAD_REQUEST);
         }
 //        if (!"yupi".equals(accessKey)) {
 //            return handleNoAuth(response);
 //        }
         if (Long.parseLong(nonce) > 10000L) {
             System.out.println("随机数错误");
-            return handleNoAuth(response);
+            return handleInvokeError(response, HttpStatus.BAD_REQUEST);
         }
         // 时间和当前时间不能超过 5 分钟
         Long currentTime = System.currentTimeMillis() / 1000;
         final Long FIVE_MINUTES = 60 * 5L;
         if ((currentTime - Long.parseLong(timestamp)) >= FIVE_MINUTES) {
             System.out.println("请求时间错误");
-            return handleNoAuth(response);
+            return handleInvokeError(response, HttpStatus.REQUEST_TIMEOUT);
         }
         // 实际情况中是从数据库中查出 secretKey
         String secretKey = invokeUser.getSecretKey();
         String serverSign = SignUtils.genSign(body, secretKey);
         if (sign == null || !sign.equals(serverSign)) {
             System.out.println("签名错误");
-            return handleNoAuth(response);
+            return handleInvokeError(response, HttpStatus.FORBIDDEN);
         }
         // 4. 请求的模拟接口是否存在，以及请求方法是否匹配
         InterfaceInfo interfaceInfo = null;
@@ -119,12 +120,17 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
         }
         if (interfaceInfo == null) {
             System.out.println("接口不存在");
-            return handleNoAuth(response);
+            return handleInvokeError(response, HttpStatus.NOT_FOUND);
         }
-        // todo 是否还有调用次数
-        // 5. 请求转发，调用模拟接口 + 响应日志
+        // 是否还有调用次数
+        UserInterfaceInfo userInterfaceInfo = innerUserInterfaceInfoService.interfaceCountJudgement(interfaceInfo.getId(), invokeUser.getId());
+        if (userInterfaceInfo.getLeftNum() <= 0 ) {
+            System.out.println("剩余可调用次数不足");
+            return handleInvokeError(response, HttpStatus.FORBIDDEN);
+        }
         //        Mono<Void> filter = chain.filter(exchange);
         //        return filter;
+        // 5. 请求转发，调用模拟接口 + 响应日志
         return handleResponse(exchange, chain, interfaceInfo.getId(), invokeUser.getId());
 
     }
@@ -156,8 +162,8 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
                             // 拼接字符串
                             return super.writeWith(
                                     fluxBody.map(dataBuffer -> {
-                                        // 7. 调用成功，接口调用次数 + 1 invokeCount
                                         try {
+                                            // 7. 调用成功，接口调用次数 + 1 invokeCount
                                             innerUserInterfaceInfoService.invokeCount(interfaceInfoId, userId);
                                         } catch (Exception e) {
                                             log.error("invokeCount error", e);
@@ -197,13 +203,11 @@ public class CustomGlobalFilter implements GlobalFilter, Ordered {
         return -1;
     }
 
-    public Mono<Void> handleNoAuth(ServerHttpResponse response) {
-        response.setStatusCode(HttpStatus.FORBIDDEN);
+
+    public Mono<Void> handleInvokeError(ServerHttpResponse response, HttpStatus status) {
+        response.setStatusCode(status);
         return response.setComplete();
     }
 
-    public Mono<Void> handleInvokeError(ServerHttpResponse response) {
-        response.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
-        return response.setComplete();
-    }
+
 }
