@@ -4,8 +4,10 @@ import com.yupi.yuapicommon.model.entity.User;
 
 
 /**
- * 内部用户服务
- *
+ * @author JianShang
+ * @version 1.0.0
+ * @description 内部用户服务
+ * @date 2024-09-23 09:35:03
  */
 public interface InnerUserService {
 

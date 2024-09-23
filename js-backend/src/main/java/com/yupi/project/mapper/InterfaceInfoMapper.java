@@ -8,7 +8,6 @@ import com.yupi.yuapicommon.model.entity.InterfaceInfo;
  * @version 1.0.0
  * @description 接口信息 Mapper
  * @date 2024-09-13 12:04:56
- * @see BaseMapper
  */
 public interface InterfaceInfoMapper extends BaseMapper<InterfaceInfo> {
 

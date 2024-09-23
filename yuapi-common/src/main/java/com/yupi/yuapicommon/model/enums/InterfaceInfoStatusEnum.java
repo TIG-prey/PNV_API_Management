@@ -1,15 +1,18 @@
 package com.yupi.yuapicommon.model.enums;
 
+import lombok.Getter;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 接口信息状态枚举
- *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
+ * @author JianShang
+ * @version 1.0.0
+ * @description 接口信息状态枚举
+ * @date 2024-09-23 09:35:22
  */
+@Getter
 public enum InterfaceInfoStatusEnum {
 
     OFFLINE("关闭", 0),
@@ -33,11 +36,4 @@ public enum InterfaceInfoStatusEnum {
         return Arrays.stream(values()).map(item -> item.value).collect(Collectors.toList());
     }
 
-    public int getValue() {
-        return value;
-    }
-
-    public String getText() {
-        return text;
-    }
 }

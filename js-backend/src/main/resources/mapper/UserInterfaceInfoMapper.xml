@@ -13,14 +13,14 @@
             <result property="status" column="status" jdbcType="INTEGER"/>
             <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
-            <result property="isDelete" column="isDelete" jdbcType="TINYINT"/>
+            <result property="isDeleted" column="isDeleted" jdbcType="TINYINT"/>
     </resultMap>
 
 
     <sql id="Base_Column_List">
         id,userId,interfaceInfoId,
         totalNum,leftNum,status,
-        createTime,updateTime,isDelete
+        createTime,updateTime,isDeleted
     </sql>
 
     <select id="listTopInvokeInterfaceInfo" resultType="com.yupi.yuapicommon.model.entity.UserInterfaceInfo">

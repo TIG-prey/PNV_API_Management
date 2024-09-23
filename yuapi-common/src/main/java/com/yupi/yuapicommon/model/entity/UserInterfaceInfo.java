@@ -7,10 +7,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 用户调用接口关系
- *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
+ * @author JianShang
+ * @version 1.0.0
+ * @description 用户调用接口关系
+ * @date 2024-09-23 08:42:54
  */
 @TableName(value ="user_interface_info")
 @Data
@@ -60,7 +60,7 @@ public class UserInterfaceInfo implements Serializable {
      * 是否删除(0-未删, 1-已删)
      */
     @TableLogic
-    private Integer isDelete;
+    private Integer isDeleted;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

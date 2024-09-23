@@ -1,10 +1,10 @@
 package com.yupi.yuapicommon.service;
 
 /**
- * 内部用户接口信息服务
- *
- * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
- * @from <a href="https://yupi.icu">编程导航知识星球</a>
+ * @author JianShang
+ * @version 1.0.0
+ * @description 内部用户接口信息服务
+ * @date 2024-09-23 09:35:08
  */
 public interface InnerUserInterfaceInfoService {
 

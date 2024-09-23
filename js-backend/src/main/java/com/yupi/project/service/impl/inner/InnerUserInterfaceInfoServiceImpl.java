@@ -19,10 +19,10 @@ public class InnerUserInterfaceInfoServiceImpl implements InnerUserInterfaceInfo
     @Resource
     private UserInterfaceInfoService userInterfaceInfoService;
 
-    @Override
-    public void validInterfaceInfo(UserInterfaceInfo userInterfaceInfo, boolean add) {
-
-    }
+    // @Override
+    // public void validInterfaceInfo(UserInterfaceInfo userInterfaceInfo, boolean add) {
+    //
+    // }
 
     @Override
     public boolean invokeCount(long interfaceInfoId, long userId) {
